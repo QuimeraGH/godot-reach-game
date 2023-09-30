@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://cnx6jp17iu48l"]
+
+[ext_resource type="Script" path="res://scripts/PlayerAndCollideScript.gd" id="1_384xk"]
+[ext_resource type="PackedScene" uid="uid://culyhivcjjmnp" path="res://scenes/Player.tscn" id="1_k4718"]
+[ext_resource type="Texture2D" uid="uid://bvwjua2m6wt46" path="res://assets/AndroidButtons.png" id="3_ddy2m"]
+
+[sub_resource type="GDScript" id="GDScript_62tkb"]
+script/source = "extends Area2D
+
+
+func _ready():
+	pass # Replace with function body.
+
+func _process(delta):
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4h44i"]
+size = Vector2(298.7, 566)
+
+[node name="PlayerAndCollide" type="Node2D"]
+script = ExtResource("1_384xk")
+
+[node name="Player" parent="." instance=ExtResource("1_k4718")]
+position = Vector2(172, 414)
+
+[node name="CollisionContainer" type="Area2D" parent="." groups=["CollisionContainerGroup"]]
+position = Vector2(-15, 29)
+script = SubResource("GDScript_62tkb")
+
+[node name="cs1" type="CollisionShape2D" parent="CollisionContainer"]
+position = Vector2(188.65, 205)
+shape = SubResource("RectangleShape2D_4h44i")
+
+[node name="Botones" type="Node2D" parent="."]
+position = Vector2(181, 412)
+
+[node name="Sprite2D" type="Sprite2D" parent="Botones"]
+texture_filter = 1
+position = Vector2(-5.49997, 55.1839)
+scale = Vector2(2.71094, 0.958054)
+texture = ExtResource("3_ddy2m")
+
+[node name="leftButton" type="Button" parent="Botones"]
+offset_left = -174.0
+offset_top = 28.0
+offset_right = -70.0
+offset_bottom = 84.0
+focus_mode = 0
+action_mode = 0
+flat = true
+
+[node name="rightButton" type="Button" parent="Botones"]
+offset_left = 63.0
+offset_top = 26.0
+offset_right = 162.0
+offset_bottom = 83.0
+flat = true
+
+[node name="tapButton" type="Button" parent="Botones"]
+offset_left = -65.0
+offset_top = 26.0
+offset_right = 59.0
+offset_bottom = 67.0
+scale = Vector2(1, 1.44531)
+flat = true
+
+[connection signal="body_exited" from="CollisionContainer" to="Player" method="_on_collision_container_body_exited"]
+[connection signal="pressed" from="Botones/leftButton" to="Player" method="_on_left_button_pressed"]
+[connection signal="pressed" from="Botones/rightButton" to="Player" method="_on_right_button_pressed"]
+[connection signal="button_down" from="Botones/tapButton" to="Player" method="_on_tap_button_button_down"]
+[connection signal="button_up" from="Botones/tapButton" to="Player" method="_on_tap_button_button_up"]

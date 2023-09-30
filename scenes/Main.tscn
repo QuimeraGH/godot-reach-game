@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3 uid="uid://bdxii5boljddj"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_2q70e"]
+[ext_resource type="PackedScene" uid="uid://bnmbxonwnpj28" path="res://scenes/UI.tscn" id="1_325o5"]
+[ext_resource type="Script" path="res://scripts/UIScript.gd" id="3_uy74k"]
+[ext_resource type="Script" path="res://scripts/Ground.gd" id="3_xwrld"]
+[ext_resource type="Texture2D" uid="uid://juora4pspr2j" path="res://assets/reach_ui.png" id="4_ba535"]
+[ext_resource type="Texture2D" uid="uid://bocmuy57exmav" path="res://assets/ButtonUi.png" id="6_ifgid"]
+[ext_resource type="FontFile" uid="uid://d3tru80ldd3uw" path="res://assets/Inconsolata-VariableFont_wdth,wght.ttf" id="7_c52d8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6b8ot"]
+size = Vector2(353, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_45lao"]
+size = Vector2(369, 591)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_2q70e")
+
+[node name="UI" parent="." instance=ExtResource("1_325o5")]
+script = ExtResource("3_uy74k")
+
+[node name="GroundNode" type="StaticBody2D" parent="."]
+position = Vector2(176, 480)
+script = ExtResource("3_xwrld")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundNode"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_6b8ot")
+
+[node name="Sprite2D" type="Sprite2D" parent="GroundNode"]
+z_index = 99
+scale = Vector2(16.6667, 2.9375)
+texture = ExtResource("4_ba535")
+hframes = 3
+vframes = 4
+
+[node name="Sprite2D2" type="Sprite2D" parent="GroundNode"]
+position = Vector2(-2.16961, -24)
+scale = Vector2(11.0106, 0.124999)
+texture = ExtResource("4_ba535")
+hframes = 2
+vframes = 4
+frame = 1
+
+[node name="ButtonsNode" type="Node2D" parent="."]
+z_index = 100
+
+[node name="ButtonUi" type="Sprite2D" parent="ButtonsNode"]
+texture_filter = 1
+position = Vector2(179, 247)
+scale = Vector2(4.14063, 4.59375)
+texture = ExtResource("6_ifgid")
+vframes = 2
+
+[node name="MenuButton" type="Button" parent="ButtonsNode"]
+offset_left = 183.0
+offset_top = 203.0
+offset_right = 286.0
+offset_bottom = 292.0
+focus_mode = 0
+flat = true
+
+[node name="RestartButton" type="Button" parent="ButtonsNode"]
+offset_left = 78.0
+offset_top = 203.0
+offset_right = 179.0
+offset_bottom = 292.0
+focus_mode = 0
+action_mode = 0
+flat = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(174.5, 193.5)
+shape = SubResource("RectangleShape2D_45lao")
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+offset_right = 61.0
+offset_bottom = 58.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+z_index = 999
+offset_left = 10.0
+offset_top = 162.0
+offset_right = 344.0
+offset_bottom = 342.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_c52d8")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="pressed" from="ButtonsNode/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="ButtonsNode/RestartButton" to="." method="_on_button_pressed"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

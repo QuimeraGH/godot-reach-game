@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnmbxonwnpj28"]
+
+[ext_resource type="Texture2D" uid="uid://juora4pspr2j" path="res://assets/reach_ui.png" id="1_5rini"]
+[ext_resource type="VideoStream" path="res://assets/psico_back.ogv" id="2_v0bw3"]
+
+[sub_resource type="Animation" id="Animation_sod36"]
+resource_name = "cuenta"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_px8ck"]
+_data = {
+"cuenta": SubResource("Animation_sod36")
+}
+
+[node name="UI" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(169.75, 242.75)
+scale = Vector2(11.5781, 32.9063)
+texture = ExtResource("1_5rini")
+hframes = 2
+vframes = 4
+
+[node name="CuentaRegresiva" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(175.5, 252)
+scale = Vector2(10.9688, 15.625)
+texture = ExtResource("1_5rini")
+hframes = 2
+vframes = 4
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CuentaRegresiva"]
+libraries = {
+"": SubResource("AnimationLibrary_px8ck")
+}
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+z_index = -1
+offset_left = -31.0
+offset_top = -4.0
+offset_right = 363.0
+offset_bottom = 502.0
+stream = ExtResource("2_v0bw3")
+expand = true
